@@ -18,9 +18,9 @@ public struct FloatingBorderTextField: View {
         ZStack(alignment: .leading) {
             TextField("", text: $text)
                 .padding(.leading)
-                .frame(height: 55)
+                .frame(height: 50)
                 .focused($isTyping)
-                .background(isTyping ? .blue : .gray, in: RoundedRectangle(cornerRadius: 14).stroke(lineWidth: 2))
+                .background(isTyping ? .blue : .gray, in: RoundedRectangle(cornerRadius: 8).stroke(lineWidth: 2))
             
             Text(title)
                 .padding(.horizontal, 5)
