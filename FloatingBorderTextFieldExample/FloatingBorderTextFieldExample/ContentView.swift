@@ -10,37 +10,60 @@ import FloatingBorderTextField
 
 struct ContentView: View {
     
-    @State private var firstName: String = ""
-    @State private var lastName: String = ""
-    
-    @State private var email = ""
-    
-    private let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
+    @State private var firstNameTextFiled: String = "12345"
+    @State private var lastNameTextFiled: String = "12345"
+    @State private var emailTextFiled: String = ""
+    @State private var password: String = ""
+    @State private var notes: String = ""
+    @State private var country: String = ""
     
     var body: some View {
-        VStack(spacing: 20) {
-            LazyVGrid(columns: columns, spacing: 20) {
-                FloatingBorderTextField(title: "First Name", text: $firstName)
-                FloatingBorderTextField(title: "Last Name", text: $lastName)
+        ScrollView {
+            VStack(spacing: 50) {
+                FloatingBorderTextField(title: "First Name", text: $firstNameTextFiled)
+                    .validation(NameValidator())
+                    .required()
+                
+                FloatingBorderTextField(title: "Last Name", text: $lastNameTextFiled)
+                    .validation(NameValidator())
+                    .required()
+                
+                FloatingBorderTextField(title: "Email", text: $emailTextFiled)
+                    .validation(ValidationFactory.email)
+                
+                FloatingBorderTextField(
+                    title: "Password",
+                    text: $password,
+                    isSecureField: true
+                )
+                .validation(MyPasswordValidator())
+                
+                FloatingBorderTextField(
+                    title: "Country",
+                    text: $country)
+                .textFieldEnabled(false)
+                .rightView {
+                    Menu {
+                        ForEach(["UAE", "Qatar", "Kuwait"], id: \.self) { item in
+                            Button(item) { country = item }
+                        }
+                    } label: {
+                        Image(systemName: "chevron.down")
+                    }
+                }
+                
+                FloatingBorderTextField(
+                    title: "Notes",
+                    text: $notes,
+                    isMultiline: true
+                )
             }
             .padding()
         }
     }
-
+    
 }
 
 #Preview {
     ContentView()
-}
-
-extension String {
-    
-    var isValidEmail: Bool {
-        let emailRegEx = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
-        return NSPredicate(format: "SELF MATCHES %@", emailRegEx).evaluate(with: self)
-    }
-
 }
