@@ -21,6 +21,8 @@ public struct FloatingBorderTextField: View {
     
     @State private var isSecure: Bool = true
     
+    private let mainColor = Color(hex: "#1E4D80")
+    
     public init(title: String,
                 text: Binding<String>,
                 isSecureField: Bool = false,
@@ -61,14 +63,14 @@ public struct FloatingBorderTextField: View {
                 }
                 .background(
                     RoundedRectangle(cornerRadius: 14)
-                        .stroke(isTyping ? .blue : (errorMessage == nil ? .gray : .red), lineWidth: 1)
+                        .stroke(isTyping ? mainColor : (errorMessage == nil ? .gray : .red), lineWidth: 1)
                         .background(isEnabled ? .white : .gray.opacity(0.05))
                 )
                 
                 Text(title)
                     .padding(.horizontal, 5)
                     .background(.white.opacity(isTyping || !text.isEmpty ? 1 : 0))
-                    .foregroundStyle(isTyping ? .blue : (errorMessage == nil ? .gray : .red))
+                    .foregroundStyle(isTyping ? mainColor : (errorMessage == nil ? .gray : .red))
                     .padding(.leading)
                     .offset(y: isTyping || !text.isEmpty ? -27 : 0)
                     .onTapGesture {
