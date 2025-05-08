@@ -22,11 +22,11 @@ struct ContentView: View {
             VStack(spacing: 50) {
                 FloatingBorderTextField(title: "First Name", text: $firstNameTextFiled)
                     .validation(NameValidator())
-                    .required()
+                    .required(true)
                 
                 FloatingBorderTextField(title: "Last Name", text: $lastNameTextFiled)
                     .validation(NameValidator())
-                    .required()
+                    .required(false)
                 
                 FloatingBorderTextField(title: "Email", text: $emailTextFiled)
                     .validation(ValidationFactory.email)

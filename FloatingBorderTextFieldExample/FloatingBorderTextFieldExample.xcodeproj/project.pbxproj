@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		053E78D02DBD29080067D860 /* FloatingBorderTextField in Frameworks */ = {isa = PBXBuildFile; productRef = 053E78CF2DBD29080067D860 /* FloatingBorderTextField */; };
 		053E78D32DBD291C0067D860 /* FloatingBorderTextField in Frameworks */ = {isa = PBXBuildFile; productRef = 053E78D22DBD291C0067D860 /* FloatingBorderTextField */; };
+		0546260E2DCA15BF0093CF7E /* FloatingBorderTextField in Frameworks */ = {isa = PBXBuildFile; productRef = 0546260D2DCA15BF0093CF7E /* FloatingBorderTextField */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				053E78D32DBD291C0067D860 /* FloatingBorderTextField in Frameworks */,
+				0546260E2DCA15BF0093CF7E /* FloatingBorderTextField in Frameworks */,
 				053E78D02DBD29080067D860 /* FloatingBorderTextField in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -74,6 +76,7 @@
 			packageProductDependencies = (
 				053E78CF2DBD29080067D860 /* FloatingBorderTextField */,
 				053E78D22DBD291C0067D860 /* FloatingBorderTextField */,
+				0546260D2DCA15BF0093CF7E /* FloatingBorderTextField */,
 			);
 			productName = FloatingBorderTextFieldExample;
 			productReference = 053E78BD2DBD28EE0067D860 /* FloatingBorderTextFieldExample.app */;
@@ -104,7 +107,7 @@
 			mainGroup = 053E78B42DBD28EE0067D860;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				053E78D12DBD291C0067D860 /* XCLocalSwiftPackageReference "../../FloatingBorderTextField" */,
+				0546260C2DCA15BF0093CF7E /* XCLocalSwiftPackageReference "../../FloatingBorderTextField" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 053E78BE2DBD28EE0067D860 /* Products */;
@@ -340,7 +343,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		053E78D12DBD291C0067D860 /* XCLocalSwiftPackageReference "../../FloatingBorderTextField" */ = {
+		0546260C2DCA15BF0093CF7E /* XCLocalSwiftPackageReference "../../FloatingBorderTextField" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../../FloatingBorderTextField;
 		};
@@ -352,6 +355,10 @@
 			productName = FloatingBorderTextField;
 		};
 		053E78D22DBD291C0067D860 /* FloatingBorderTextField */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FloatingBorderTextField;
+		};
+		0546260D2DCA15BF0093CF7E /* FloatingBorderTextField */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FloatingBorderTextField;
 		};
