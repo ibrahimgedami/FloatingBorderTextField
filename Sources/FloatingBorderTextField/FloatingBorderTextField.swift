@@ -42,9 +42,9 @@ public struct FloatingBorderTextField: View {
                 HStack(spacing: 0) {
                     inputField
                         .padding(.leading, 12)
-                        .padding(.top, 12)
+//                        .padding(.top, 12)
                         .padding(.bottom, isMultiline ? 20 : 0)
-                        .frame(minHeight: isMultiline ? 65 : 50)
+                        .frame(minHeight: isMultiline ? 60 : 50)
                         .focused($isTyping)
                         .disabled(!isEnabled)
                         .disabled(!isTextFieldEnabled)
@@ -71,69 +71,20 @@ public struct FloatingBorderTextField: View {
                 )
                 .overlay(
                     Text(title)
-                        .font(.caption)
+                        .font(isTyping ? .title3 : .caption)
                         .padding(.horizontal, 5)
                         .background(.white)
                         .foregroundStyle(isTyping ? mainColor : (errorMessage == nil ? .gray : .red))
                         .scaleEffect(isTyping || !text.isEmpty ? 0.85 : 1.0, anchor: .leading)
-                        .offset(y: isTyping || !text.isEmpty ? -10 : 18)
+                        .offset(y: isTyping || !text.isEmpty ? -11 : (isMultiline ? 30 : 15))
                         .padding(.leading, 18)
-                        .animation(.easeInOut(duration: 0.2), value: isTyping || !text.isEmpty),
+                        .onTapGesture {
+                            isTyping = true
+                        }
+                        .animation(.linear(duration: 0.1), value: isTyping || !text.isEmpty),
                     alignment: .topLeading
                 )
             }
-
-//            ZStack(alignment: .topLeading) {
-//                ZStack(alignment: .leading) {
-//                    HStack(spacing: 0) {
-//                        inputField
-//                            .padding(.leading, 12)
-//                            .frame(minHeight: isMultiline ? 65 : 50)
-//                            .focused($isTyping)
-//                            .disabled(!isEnabled)
-//                            .disabled(!isTextFieldEnabled)
-//                        
-//                        Spacer(minLength: 0)
-//                        
-//                        if isSecureField {
-//                            Button {
-//                                isSecure.toggle()
-//                            } label: {
-//                                Image(systemName: isSecure ? "eye.slash" : "eye")
-//                                    .foregroundStyle(.gray)
-//                            }
-//                            .padding(.trailing, 12)
-//                        } else if let rightView = rightView {
-//                            rightView
-//                                .padding(.trailing, 12)
-//                        }
-//                    }
-//                    .background(
-//                        RoundedRectangle(cornerRadius: 14)
-//                            .stroke(isTyping ? mainColor : (errorMessage == nil ? .gray : .red), lineWidth: 1)
-//                            .background(isEnabled ? .white : .gray.opacity(0.05))
-//                    )
-//                    
-//                    Text(title)
-//                        .padding(.horizontal, 5)
-//                        .background(.white.opacity(isTyping || !text.isEmpty ? 1 : 0))
-//                        .foregroundStyle(isTyping ? mainColor : (errorMessage == nil ? .gray : .red))
-//                        .padding(.leading)
-//                        .offset(y: isTyping || !text.isEmpty ? -27 : 0)
-//                        .onTapGesture {
-//                            isTyping = true
-//                        }
-//                        .animation(.linear(duration: 0.1), value: isTyping || !text.isEmpty)
-//                }
-//                //            .animation(.linear(duration: 0.1), value: isTyping)
-//                
-//                if isRequired {
-//                    Text("*")
-//                        .foregroundStyle(.red)
-//                        .padding(.leading, -10)
-//                        .padding(.top, -10)
-//                }
-//            }
             
             if let errorMessage = errorMessage {
                 Text(errorMessage)
@@ -151,6 +102,7 @@ public struct FloatingBorderTextField: View {
         .onChange(of: text) { _, _ in
             // Run validation whenever the text changes (e.g., typing or programmatic update),
             // but only if the user is typing or the text is not empty
+            isTyping = true
             if !text.isEmpty || isTyping {
                 validate()
             }
@@ -236,3 +188,56 @@ public extension View {
     }
     
 }
+
+
+//            ZStack(alignment: .topLeading) {
+//                ZStack(alignment: .leading) {
+//                    HStack(spacing: 0) {
+//                        inputField
+//                            .padding(.leading, 12)
+//                            .frame(minHeight: isMultiline ? 65 : 50)
+//                            .focused($isTyping)
+//                            .disabled(!isEnabled)
+//                            .disabled(!isTextFieldEnabled)
+//
+//                        Spacer(minLength: 0)
+//
+//                        if isSecureField {
+//                            Button {
+//                                isSecure.toggle()
+//                            } label: {
+//                                Image(systemName: isSecure ? "eye.slash" : "eye")
+//                                    .foregroundStyle(.gray)
+//                            }
+//                            .padding(.trailing, 12)
+//                        } else if let rightView = rightView {
+//                            rightView
+//                                .padding(.trailing, 12)
+//                        }
+//                    }
+//                    .background(
+//                        RoundedRectangle(cornerRadius: 14)
+//                            .stroke(isTyping ? mainColor : (errorMessage == nil ? .gray : .red), lineWidth: 1)
+//                            .background(isEnabled ? .white : .gray.opacity(0.05))
+//                    )
+//
+//                    Text(title)
+//                        .padding(.horizontal, 5)
+//                        .background(.white.opacity(isTyping || !text.isEmpty ? 1 : 0))
+//                        .foregroundStyle(isTyping ? mainColor : (errorMessage == nil ? .gray : .red))
+//                        .padding(.leading)
+//                        .offset(y: isTyping || !text.isEmpty ? -27 : 0)
+//                        .onTapGesture {
+//                            isTyping = true
+//                        }
+//                        .animation(.linear(duration: 0.1), value: isTyping || !text.isEmpty)
+//                }
+//                //            .animation(.linear(duration: 0.1), value: isTyping)
+//
+//                if isRequired {
+//                    Text("*")
+//                        .foregroundStyle(.red)
+//                        .padding(.leading, -10)
+//                        .padding(.top, -10)
+//                }
+//            }
