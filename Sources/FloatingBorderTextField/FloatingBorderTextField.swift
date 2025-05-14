@@ -39,84 +39,50 @@ public struct FloatingBorderTextField: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             ZStack(alignment: .topLeading) {
-                // The main floating text field box
-                ZStack(alignment: .leading) {
-                    HStack(spacing: 0) {
-                        inputField
-                            .padding(.leading, 12)
-                            .frame(minHeight: isMultiline ? 65 : 50)
-                            .focused($isTyping)
-                            .disabled(!isEnabled)
-                            .disabled(!isTextFieldEnabled)
-                        
-                        Spacer(minLength: 0)
-                        
-                        if isSecureField {
-                            Button {
-                                isSecure.toggle()
-                            } label: {
-                                Image(systemName: isSecure ? "eye.slash" : "eye")
-                                    .foregroundStyle(.gray)
-                            }
-                            .padding(.trailing, 12)
-                        } else if let rightView = rightView {
-                            rightView
-                                .padding(.trailing, 12)
-                        }
-                    }
-                    .background(
-                        RoundedRectangle(cornerRadius: 14)
-                            .stroke(isTyping ? mainColor : (errorMessage == nil ? .gray : .red), lineWidth: 1)
-                            .background(isEnabled ? .white : .gray.opacity(0.05))
-                    )
+                HStack(spacing: 0) {
+                    inputField
+                        .padding(.leading, 12)
+                        .padding(.top, 12)
+                        .padding(.bottom, isMultiline ? 20 : 0)
+                        .frame(minHeight: isMultiline ? 65 : 50)
+                        .focused($isTyping)
+                        .disabled(!isEnabled)
+                        .disabled(!isTextFieldEnabled)
                     
-                    Text(title)
-                        .padding(.horizontal, 5)
-                        .background(.white.opacity(isTyping || !text.isEmpty ? 1 : 0))
-                        .foregroundStyle(isTyping ? mainColor : (errorMessage == nil ? .gray : .red))
-                        .padding(.leading)
-                        .offset(y: isTyping || !text.isEmpty ? -27 : 0)
-                        .onTapGesture {
-                            isTyping = true
+                    Spacer(minLength: 0)
+                    
+                    if isSecureField {
+                        Button {
+                            isSecure.toggle()
+                        } label: {
+                            Image(systemName: isSecure ? "eye.slash" : "eye")
+                                .foregroundStyle(.gray)
                         }
-                        .animation(.linear(duration: 0.1), value: isTyping || !text.isEmpty)
+                        .padding(.trailing, 12)
+                    } else if let rightView = rightView {
+                        rightView
+                            .padding(.trailing, 12)
+                    }
                 }
-                
-                // Asterisk displayed "outside" the top-left corner
-                if isRequired {
-                    Text("*")
-                        .foregroundStyle(.red)
-                        .font(.title3)
-                        .offset(x: -10, y: -10)
-                }
+                .background(
+                    RoundedRectangle(cornerRadius: 14)
+                        .stroke(isTyping ? mainColor : (errorMessage == nil ? .gray : .red), lineWidth: 1)
+                        .background(isEnabled ? .white : .gray.opacity(0.05))
+                )
+                .overlay(
+                    Text(title)
+                        .font(.caption)
+                        .padding(.horizontal, 5)
+                        .background(.white)
+                        .foregroundStyle(isTyping ? mainColor : (errorMessage == nil ? .gray : .red))
+                        .scaleEffect(isTyping || !text.isEmpty ? 0.85 : 1.0, anchor: .leading)
+                        .offset(y: isTyping || !text.isEmpty ? -10 : 18)
+                        .padding(.leading, 18)
+                        .animation(.easeInOut(duration: 0.2), value: isTyping || !text.isEmpty),
+                    alignment: .topLeading
+                )
             }
-            
-            if let errorMessage = errorMessage {
-                Text(errorMessage)
-                    .font(.caption)
-                    .foregroundStyle(.red)
-                    .padding(.leading, 8)
-            }
-        }
-        .onAppear {
-            if !text.isEmpty || isTyping {
-                validate()
-            }
-        }
-        .onChange(of: text) { _, _ in
-            if !text.isEmpty || isTyping {
-                validate()
-            }
-        }
-        .onChange(of: isTyping) { _, newValue in
-            if newValue || !text.isEmpty {
-                validate()
-            }
-        }
-    }
 
-//    public var body: some View {
-//        VStack(alignment: .leading, spacing: 4) {
 //            ZStack(alignment: .topLeading) {
 //                ZStack(alignment: .leading) {
 //                    HStack(spacing: 0) {
@@ -168,41 +134,41 @@ public struct FloatingBorderTextField: View {
 //                        .padding(.top, -10)
 //                }
 //            }
-//            
-//            if let errorMessage = errorMessage {
-//                Text(errorMessage)
-//                    .font(.caption)
-//                    .foregroundStyle(.red)
-//                    .padding(.leading, 8)
-//            }
-//        }
-//        .onAppear {
-//            // Run validation on view load if text has a value or the user is already typing
-//            if !text.isEmpty || isTyping {
-//                validate()
-//            }
-//        }
-//        .onChange(of: text) { _, _ in
-//            // Run validation whenever the text changes (e.g., typing or programmatic update),
-//            // but only if the user is typing or the text is not empty
-//            if !text.isEmpty || isTyping {
-//                validate()
-//            }
-//        }
-//        .onChange(of: isTyping) { _, newValue in
-//            // Run validation when typing starts/stops,
-//            // and only if typing or the field already has a value
-//            if newValue || !text.isEmpty {
-//                validate()
-//            }
-//        }
-//    }
-    
+            
+            if let errorMessage = errorMessage {
+                Text(errorMessage)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+                    .padding(.leading, 8)
+            }
+        }
+        .onAppear {
+            // Run validation on view load if text has a value or the user is already typing
+            if !text.isEmpty || isTyping {
+                validate()
+            }
+        }
+        .onChange(of: text) { _, _ in
+            // Run validation whenever the text changes (e.g., typing or programmatic update),
+            // but only if the user is typing or the text is not empty
+            if !text.isEmpty || isTyping {
+                validate()
+            }
+        }
+        .onChange(of: isTyping) { _, newValue in
+            // Run validation when typing starts/stops,
+            // and only if typing or the field already has a value
+            if newValue || !text.isEmpty {
+                validate()
+            }
+        }
+    }
+        
     @ViewBuilder
     private var inputField: some View {
         if isMultiline {
             TextEditor(text: $text)
-                .padding(.vertical, 12) // optional vertical padding for better feel
+                .padding(.vertical)
                 .background(Color.clear)
                 .frame(maxHeight: .infinity)
                 .scrollContentBackground(.hidden)
