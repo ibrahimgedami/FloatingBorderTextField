@@ -43,7 +43,7 @@ public struct FloatingBorderTextField: View {
                 HStack(spacing: 0) {
                     inputField
                         .padding(.leading, 12)
-                        .frame(minHeight: isMultiline ? 60 : 50)
+                        .frame(minHeight: 40)
                         .focused($isTyping)
                         .disabled(!isEnabled)
                         .disabled(!isTextFieldEnabled)
@@ -64,7 +64,7 @@ public struct FloatingBorderTextField: View {
                     }
                 }
                 .background(
-                    RoundedRectangle(cornerRadius: 14)
+                    RoundedRectangle(cornerRadius: 8)
                         .stroke(isTyping ? mainColor : (errorMessage == nil ? .gray : .red), lineWidth: 1)
                         .background(isEnabled ? .white : .gray.opacity(0.05))
                 )
@@ -75,7 +75,7 @@ public struct FloatingBorderTextField: View {
                         .background(.white)
                         .foregroundStyle(isTyping ? mainColor : (errorMessage == nil ? .gray : .red))
                         .scaleEffect(isTyping || !text.isEmpty ? 0.85 : 1.0, anchor: .leading)
-                        .offset(y: isTyping || !text.isEmpty ? -11 : (isMultiline ? 30 : 15))
+                        .offset(y: isTyping || !text.isEmpty ? -11 : 15)
                         .padding(.leading, 18)
                         .onTapGesture {
                             isTyping = true
