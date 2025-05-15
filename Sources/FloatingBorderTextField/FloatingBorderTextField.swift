@@ -17,23 +17,24 @@ public struct FloatingBorderTextField: View {
     private var isMultiline: Bool = false
     private var isTextFieldEnabled: Bool = true
     private var isRequired: Bool = false
-    
-    @State private var rightView: AnyView?
-    
     @State private var isSecure: Bool = true
-    
-    private let mainColor = Color(hex: "#1E4D80")
+
+    @State private var rightView: AnyView?
+        
+    private var mainColor: Color = Color(hexString: "#1E4D80")
     
     public init(title: String,
                 text: Binding<String>,
                 isSecureField: Bool = false,
                 isMultiline: Bool = false,
-                isTextFieldEnabled: Bool = true) {
+                isTextFieldEnabled: Bool = true,
+                defaultColor: Color = Color(hexString: "#1E4D80")) {
         self.title = title
         self._text = text
         self.isSecureField = isSecureField
         self.isMultiline = isMultiline
         self.isTextFieldEnabled = isTextFieldEnabled
+        self.mainColor = defaultColor
     }
     
     public var body: some View {
@@ -42,8 +43,6 @@ public struct FloatingBorderTextField: View {
                 HStack(spacing: 0) {
                     inputField
                         .padding(.leading, 12)
-//                        .padding(.top, 12)
-                        .padding(.bottom, isMultiline ? 20 : 0)
                         .frame(minHeight: isMultiline ? 60 : 50)
                         .focused($isTyping)
                         .disabled(!isEnabled)
@@ -120,7 +119,6 @@ public struct FloatingBorderTextField: View {
     private var inputField: some View {
         if isMultiline {
             TextEditor(text: $text)
-                .padding(.vertical)
                 .background(Color.clear)
                 .frame(maxHeight: .infinity)
                 .scrollContentBackground(.hidden)
