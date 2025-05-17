@@ -82,6 +82,13 @@ public struct FloatingBorderTextField: View {
                         .animation(.linear(duration: 0.1), value: isTyping || !text.isEmpty),
                     alignment: .topLeading
                 )
+                
+                if isRequired {
+                    Text("*")
+                        .foregroundStyle(.red)
+                        .padding(.leading, -10)
+                        .padding(.top, -10)
+                }
             }
             
             if let errorMessage = errorMessage {
