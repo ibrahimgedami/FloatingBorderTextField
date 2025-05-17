@@ -5,6 +5,12 @@ import SwiftUI
 
 public struct FloatingBorderTextField: View {
     
+    public enum FieldStyle {
+        case normal
+        case secure
+        case multiline
+    }
+    
     let title: String
     @Binding var text: String
     
@@ -13,11 +19,12 @@ public struct FloatingBorderTextField: View {
     @FocusState private var isTyping: Bool
     @Environment(\.isEnabled) private var isEnabled: Bool
     
-    private var isSecureField: Bool = false
-    private var isMultiline: Bool = false
+//    private var isSecureField: Bool = false
+//    private var isMultiline: Bool = false
     private var isTextFieldEnabled: Bool = true
     private var isRequired: Bool = false
     @State private var isSecure: Bool = true
+    private let style: FieldStyle
 
     @State private var rightView: AnyView?
         
@@ -25,14 +32,16 @@ public struct FloatingBorderTextField: View {
     
     public init(title: String,
                 text: Binding<String>,
-                isSecureField: Bool = false,
-                isMultiline: Bool = false,
+                style: FieldStyle = .normal,
+//                isSecureField: Bool = false,
+//                isMultiline: Bool = false,
                 isTextFieldEnabled: Bool = true,
                 defaultColor: Color = Color(hexString: "#1E4D80")) {
         self.title = title
         self._text = text
-        self.isSecureField = isSecureField
-        self.isMultiline = isMultiline
+        self.style = style
+//        self.isSecureField = isSecureField
+//        self.isMultiline = isMultiline
         self.isTextFieldEnabled = isTextFieldEnabled
         self.mainColor = defaultColor
     }
@@ -50,7 +59,7 @@ public struct FloatingBorderTextField: View {
                     
                     Spacer(minLength: 0)
                     
-                    if isSecureField {
+                    if style == .secure {
                         Button {
                             isSecure.toggle()
                         } label: {
@@ -123,14 +132,14 @@ public struct FloatingBorderTextField: View {
         
     @ViewBuilder
     private var inputField: some View {
-        if isMultiline {
+        if style == .multiline {
             TextEditor(text: $text)
                 .background(Color.clear)
                 .frame(maxHeight: .infinity)
                 .scrollContentBackground(.hidden)
-        } else if isSecureField && isSecure {
+        } else if style == .secure && isSecure {
             SecureField("", text: $text)
-        } else {
+        } else if style == .normal {
             TextField("", text: $text)
         }
     }
