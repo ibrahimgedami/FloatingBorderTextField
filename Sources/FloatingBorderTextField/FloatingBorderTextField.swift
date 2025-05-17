@@ -3,13 +3,15 @@
 
 import SwiftUI
 
-public struct FloatingBorderTextField: View {
+public enum FieldStyle {
     
-    public enum FieldStyle {
-        case normal
-        case secure
-        case multiline
-    }
+    case normal
+    case secure
+    case multiline
+    
+}
+
+public struct FloatingBorderTextField: View {
     
     let title: String
     @Binding var text: String
