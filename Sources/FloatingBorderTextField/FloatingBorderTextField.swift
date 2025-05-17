@@ -60,7 +60,6 @@ public struct FloatingBorderTextField: View {
                         .padding(.trailing, 12)
                     } else if let rightView = rightView {
                         rightView
-                            .padding(.trailing, 12)
                     }
                 }
                 .background(
