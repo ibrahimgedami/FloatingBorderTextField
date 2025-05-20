@@ -53,6 +53,7 @@ public struct FloatingBorderTextField: View {
             ZStack(alignment: .topLeading) {
                 HStack(spacing: 0) {
                     inputField
+                        .font(.system(size: 16))
                         .padding(.leading, 12)
                         .frame(minHeight: 40)
                         .focused($isTyping)
